@@ -20,12 +20,12 @@ module Aion
     end
 
     module TrackingInstanceMethods
-      def skip_aion_versioning?
-        @skip_aion_versioning || false
-      end
+      def without_tracking
+        @skip_aion_versioning = true
 
-      def skip_aion_versioning=(value)
-        @skip_aion_versioning = value
+        yield self
+      ensure
+        @skip_aion_versioning = false
       end
 
       def aion_create
@@ -61,6 +61,12 @@ module Aion
           versionable_type: self.class.name,
           versionable_identifier: self.public_send(self.class.aion_options[:identifier])
         ).order(id: :asc, version: :asc)
+      end
+
+      private
+
+      def skip_aion_versioning?
+        @skip_aion_versioning || false
       end
     end
 

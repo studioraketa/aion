@@ -47,9 +47,9 @@ module Aion
           record.public_send "#{attribute}=", values[0]
         end
 
-        record.skip_aion_versioning = true
-        record.save!
-        record.skip_aion_versioning = false
+        record.without_tracking do |not_tracked_record|
+          not_tracked_record.save!
+        end
       end
     end
   end
