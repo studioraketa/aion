@@ -2,7 +2,7 @@ class <%= migration_class_name %> < <%= migration_base_class %>
   def up
     create_table :aion_changesets do |t|
       t.string :versionable_type, null: false
-      t.string :versionable_identifier, limit: 20, null: false
+      t.string :versionable_identifier, limit: 50, null: false
       t.string :locale, limit: 20, null: false
       t.string :operator, null: false
       t.string :action, limit: 20, null: false
