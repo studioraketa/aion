@@ -60,7 +60,7 @@ module Aion
         Changeset.where(
           versionable_type: self.class.name,
           versionable_identifier: self.public_send(self.class.aion_options[:identifier])
-        ).order(id: :asc, version: :asc)
+        )
       end
 
       private
