@@ -10,10 +10,12 @@ class <%= migration_class_name %> < <%= migration_base_class %>
       t.integer :version, null: false
       t.string :request_uuid, null: false, default: ''
       t.datetime :created_at, null: false
+      t.boolean :archived, null: false, default: false
     end
 
     add_index :aion_changesets, :created_at
     add_index :aion_changesets, :locale
+    add_index :aion_changesets, :archived
     add_index(
       :aion_changesets,
       %i[versionable_type versionable_identifier version locale],

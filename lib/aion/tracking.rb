@@ -28,6 +28,25 @@ module Aion
         @skip_aion_versioning = false
       end
 
+      def versions
+        Changeset.where(
+          versionable_type: self.class.name,
+          versionable_identifier: self.public_send(self.class.aion_options[:identifier])
+        )
+      end
+
+      private
+
+      def write_version(action)
+        return if skip_aion_versioning?
+
+        CreateChangeset.new(self, aion_options.merge(action: action)).execute
+      end
+
+      def archive_versions
+        versions.update_all(archived: true)
+      end
+
       def aion_create
         write_version 'create'
       end
@@ -38,12 +57,7 @@ module Aion
 
       def aion_destroy
         write_version('destroy') unless new_record?
-      end
-
-      def write_version(action)
-        return if skip_aion_versioning?
-
-        CreateChangeset.new(self, aion_options.merge(action: action)).execute
+        archive_versions unless new_record?
       end
 
       def aion_options
@@ -55,15 +69,6 @@ module Aion
           changes_extractor: RecordChanges.extractor(self.class.aion_options[:custom_changes_class])
         }
       end
-
-      def versions
-        Changeset.where(
-          versionable_type: self.class.name,
-          versionable_identifier: self.public_send(self.class.aion_options[:identifier])
-        )
-      end
-
-      private
 
       def skip_aion_versioning?
         @skip_aion_versioning || false

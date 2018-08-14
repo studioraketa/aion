@@ -2,6 +2,8 @@ module Aion
   class Changeset < ::ActiveRecord::Base
     self.table_name = 'aion_changesets'
 
+    scope :active, ->{ where(archived: false) }
+    scope :inactive, ->{ where(archived: true) }
     scope :for_locale, ->(locale) { where(locale: locale) }
     scope :after, ->(datetime) { where('created_at > ?', datetime) }
     scope :before, ->(datetime) { where('created_at < ?', datetime) }
