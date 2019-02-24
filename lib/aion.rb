@@ -34,6 +34,8 @@ end
 
 Aion.controller_statistics = %i[request_uuid operator]
 
-class ActiveRecord::Base
-  include Aion::Tracking
+module ActiveRecord
+  class Base
+    include Aion::Tracking
+  end
 end

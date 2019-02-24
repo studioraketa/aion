@@ -11,9 +11,9 @@ module Aion
 
     def calculate
       case action
-        when 'update' then calculate_changes_on_update
-        when 'create' then calculate_changes_om_create
-        when 'destroy' then calculate_changes_on_destroy
+      when 'update' then calculate_changes_on_update
+      when 'create' then calculate_changes_on_create
+      when 'destroy' then calculate_changes_on_destroy
       end
     end
 
@@ -21,7 +21,7 @@ module Aion
 
     attr_reader :record, :action, :changes_extractor, :locale
 
-    def calculate_changes_om_create
+    def calculate_changes_on_create
       record.attributes.except(*not_logged_columns).each_with_object({}) do |key_value, memo|
         key, value = key_value
         memo[key] = [nil, value]
@@ -51,7 +51,7 @@ module Aion
       record.class.column_names - not_logged_columns
     end
 
-    def not_logged_columns
+    def not_logged_columns # rubocop:disable Metrics/AbcSize
       if aion_options[:only].present?
         (record.class.column_names | default_ignored_columns) - aion_options[:only]
       elsif aion_options[:except].present?

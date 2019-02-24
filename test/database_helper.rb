@@ -3,13 +3,13 @@ ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: ':memory:'
 
 ActiveRecord::Schema.define(version: 0) do
   create_table :users do |t|
-    t.column :username, :string
-    t.column :password, :string
-    t.column :activated, :boolean
-    t.column :status, :integer, default: 0
-    t.column :activated_at, :datetime
-    t.column :created_at, :datetime
-    t.column :updated_at, :datetime
+    t.string :username, null: false, default: ''
+    t.string :password, null: false, default: ''
+    t.boolean :activated, null: false, default: false
+    t.integer :status, default: 0, null: false
+    t.datetime :activated_at
+    t.datetime :created_at, null: false
+    t.datetime :updated_at, null: false
   end
 
   add_index :users, :username, unique: true
@@ -52,23 +52,35 @@ end
 class User < ActiveRecord::Base
   aion_track_changes
 
-  enum status: {guest: 0, moderator: 1, admin: 2}
+  enum status: { guest: 0, moderator: 1, admin: 2 }
 end
 
-class UserOnlyName < ActiveRecord::Base
+class UserOnlyUserName < ActiveRecord::Base
   self.table_name = 'users'
 
-  aion_track_changes only: :name
+  aion_track_changes only: :username
+
+  enum status: { guest: 0, moderator: 1, admin: 2 }
 end
 
 class UserExceptPassword < ActiveRecord::Base
   self.table_name = 'users'
 
   aion_track_changes except: :password
+
+  enum status: { guest: 0, moderator: 1, admin: 2 }
+end
+
+class UserWithCustomIdentifier < ActiveRecord::Base
+  self.table_name = 'users'
+
+  aion_track_changes identifier: :username
+
+  enum status: { guest: 0, moderator: 1, admin: 2 }
 end
 
 class UntrackedUser < ActiveRecord::Base
   self.table_name = 'users'
 
-  enum status: {guest: 0, moderator: 1, admin: 2}
+  enum status: { guest: 0, moderator: 1, admin: 2 }
 end
