@@ -4,7 +4,7 @@ module Aion
 
   class IrreversibleChangeError < Error
     def message
-      'You cannot reverse initial version'
+      'You cannot reverse an initial version'
     end
   end
 end

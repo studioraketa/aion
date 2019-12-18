@@ -9,7 +9,7 @@ module Aion
     end
 
     class Default
-      def initialize(record, _locale)
+      def initialize(record, _locale = nil)
         @record = record
       end
 

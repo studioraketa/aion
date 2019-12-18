@@ -1,0 +1,46 @@
+AllCops:
+  Exclude:
+    - 'aion.gemspec'
+    - 'bin/*'
+    - lib/generators/aion/templates/install.rb
+
+Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 100
+
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+    - test/**/*
+
+Metrics/ClassLength:
+  Exclude:
+    - test/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - test/**/*
+
+Metrics/AbcSize:
+  Exclude:
+    - test/**/*
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: 'nested'
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
