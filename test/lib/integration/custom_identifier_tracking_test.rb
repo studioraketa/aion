@@ -56,8 +56,6 @@ module Aion
         )
       end
 
-      # TODO: When the custom identifier column is changed the
-      # versioning starts from the beginning! What to do about this behaviour?
       def test_tracking_update_changes
         create_params = user_params
         user = create_user(create_params)
