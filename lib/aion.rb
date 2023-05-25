@@ -1,7 +1,5 @@
 require 'active_record'
 
-require "aion/railtie"
-
 require 'aion/version'
 require 'aion/revert'
 require 'aion/diff'
@@ -36,4 +34,8 @@ end
 
 Aion.controller_statistics = %i[request_uuid operator]
 
-::ActiveRecord::Base.include Aion::Tracking
+module ActiveRecord
+  class Base
+    include Aion::Tracking
+  end
+end

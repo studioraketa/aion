@@ -26,7 +26,9 @@ module Aion
     def changesets_scope
       Changeset.where(
         versionable_type: versionable.class.name,
-        versionable_identifier: versionable.public_send(versionable.class.aion_options[:identifier]),
+        versionable_identifier: versionable.public_send(
+          versionable.class.aion_options[:identifier]
+        ),
         locale: changeset.locale
       )
     end
@@ -47,9 +49,7 @@ module Aion
           record.public_send "#{attribute}=", values[0]
         end
 
-        record.without_tracking do |not_tracked_record|
-          not_tracked_record.save!
-        end
+        record.without_tracking(&:save!)
       end
     end
   end

@@ -31,7 +31,7 @@ module Aion
       def versions
         Changeset.where(
           versionable_type: self.class.name,
-          versionable_identifier: self.public_send(self.class.aion_options[:identifier])
+          versionable_identifier: public_send(self.class.aion_options[:identifier])
         )
       end
 
@@ -77,7 +77,7 @@ module Aion
 
     module TrackingClassMethods
       def normalize_aion_options(input)
-        Hash.new.tap do |hash|
+        {}.tap do |hash|
           hash[:only] = Array(input[:only]).map(&:to_s)
           hash[:except] = Array(input[:except]).map(&:to_s)
           hash[:custom_changes_class] = input[:custom_changes_class]
